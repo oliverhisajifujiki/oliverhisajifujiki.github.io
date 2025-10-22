@@ -30,5 +30,58 @@
       </section>
     </main>
 
+    <!-- Bouncing icon (DVD-style) -->
+    <img id="bouncer" src="images/ollyE76219.png" alt="bouncing olly logo">
+
+
+<script>
+(() => {
+  const el = document.getElementById('bouncer');
+  const COLORS = [
+    'images/olly8e4a28.png',
+    'images/ollyC21717.png',
+    'images/ollyE76219.png',
+    'images/ollyFEA712.png'
+  ];
+
+  let x = 100, y = 100;
+  let vx = 0.3, vy = 0.22;
+  let rotation = 0;
+
+  el.addEventListener('click', () => {
+    rotation += 360;  // spin one full turn per click
+  });
+
+  function step() {
+    const margin = -25;
+    const maxX = window.innerWidth - el.offsetWidth - margin;
+    const maxY = window.innerHeight - el.offsetHeight - margin;
+
+    x += vx;
+    y += vy;
+
+    if (x <= margin || x >= maxX) {
+      vx = -vx;
+      el.src = COLORS[Math.floor(Math.random() * COLORS.length)];
+    }
+    if (y <= margin || y >= maxY) {
+      vy = -vy;
+      el.src = COLORS[Math.floor(Math.random() * COLORS.length)];
+    }
+
+    // include rotation and position together
+    el.style.transform = `translate(${Math.round(x)}px, ${Math.round(y)}px) rotate(${rotation}deg)`;
+    requestAnimationFrame(step);
+  }
+
+  requestAnimationFrame(step);
+})();
+
+
+
+
+</script>
+
+
   </body>
 </html>
