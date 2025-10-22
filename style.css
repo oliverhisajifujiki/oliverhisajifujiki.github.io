@@ -1,0 +1,89 @@
+/* overall page background */
+body {
+  font-family: "Trebuchet MS", Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #2b1a12; /* readable warm brown */
+  background: linear-gradient(to bottom, #fddca9 0%, #fbe8ca 100%);
+  background-attachment: fixed;
+}
+
+header {
+  background-image:
+    linear-gradient(
+      to right,
+      #562717 0%,
+      #C21717 15%,
+      #E76219 35%,
+      #FEA712 60%,
+      #E76219 85%,
+      #562717 100%
+    ),
+    repeating-linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.12) 0px,
+      rgba(0, 0, 0, 0.12) 8px,
+      transparent 8px,
+      transparent 16px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.12) 0px,
+      rgba(0, 0, 0, 0.12) 8px,
+      transparent 8px,
+      transparent 16px
+    );
+
+  background-blend-mode: overlay;
+
+  /* make the gradient background much larger (for slower, deeper motion) */
+  background-size: 600% 600%;
+
+  /* slow down the movement dramatically */
+  animation: glowTravel 200s linear infinite;
+
+  color: #fddca9;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  padding: 2rem 1rem;
+  text-align: center;
+  border-bottom: 4px solid #562717;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+@keyframes glowTravel {
+  0% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
+  100% { background-position: 0% 0%; }
+}
+
+
+
+
+/* MAIN */
+main {
+  background: radial-gradient(
+    circle at 50% 0%,
+    rgba(254, 167, 18, 0.1) 0%,
+    rgba(230, 98, 25, 0.05) 50%,
+    rgba(86, 39, 23, 0.05) 100%
+  );
+  max-width: 800px;
+  margin: 2.5rem auto;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(86, 39, 23, 0.15);
+}
+
+/* NAV LINKS */
+nav a {
+  color: #fddca9;
+  margin: 0 1rem;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+nav a:hover {
+  color: #fea712;
+}
+
