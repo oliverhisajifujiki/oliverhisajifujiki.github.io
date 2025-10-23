@@ -53,24 +53,27 @@
   });
 
   function step() {
-    const margin = -25;
-    const maxX = window.innerWidth - el.offsetWidth - margin;
-    const maxY = window.innerHeight - el.offsetHeight - margin;
+    const maxX = window.innerWidth - el.offsetWidth;
+    const maxY = window.innerHeight - el.offsetHeight;
 
     x += vx;
     y += vy;
 
-    if (x <= margin || x >= maxX) {
+    // bounce on horizontal edges
+    if (x <= 0 || x >= maxX) {
       vx = -vx;
       el.src = COLORS[Math.floor(Math.random() * COLORS.length)];
     }
-    if (y <= margin || y >= maxY) {
+
+    // bounce on vertical edges
+    if (y <= 0 || y >= maxY) {
       vy = -vy;
       el.src = COLORS[Math.floor(Math.random() * COLORS.length)];
     }
 
-    // include rotation and position together
+    // apply motion + rotation
     el.style.transform = `translate(${Math.round(x)}px, ${Math.round(y)}px) rotate(${rotation}deg)`;
+
     requestAnimationFrame(step);
   }
 
