@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Metropolis–Hastings Sampler – Olly Fujiki</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+</head>
+
+<body>
+  <header>
+    <h1>Metropolis–Hastings Sampler</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="projects.html">Projects</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="project-section">
+
+      <h2>Metropolis–Hastings</h2>
+
+      <!-- First dropdown: Description -->
+      <details class="dropdown">
+        <summary>Description</summary>
+        <p>
+          The Metropolis–Hastings algorithm is a Markov Chain Monte Carlo (MCMC)
+          method used to generate samples from complex probability distributions
+          where direct sampling is difficult. It works by proposing new points
+          based on a jump distribution and accepting or rejecting them according
+          to how well they match the target distribution.
+        </p>
+        <p>
+          While powerful and flexible, it can suffer from slow convergence or poor
+          mixing when the proposal distribution is not well-tuned. It's commonly
+          used in Bayesian inference, computational physics, and population genetics.
+        </p>
+        
+        <p>
+          <a href="#" id="tldrLink" class="tldr-link">(TL;DR)</a>
+        </p>
+      </details>
+
+      <!-- Second dropdown: Algorithm -->
+      <details class="dropdown">
+        <summary>Algorithm</summary>
+        <figure>
+          <img src="images/MHAlg.png"
+               alt="Metropolis–Hastings Algorithm"
+               width="600">
+        </figure>
+      </details>
+
+      <!-- Third dropdown: Performance -->
+      <details class="dropdown">
+        <summary>Performance</summary>
+
+        <h3>1D Gaussian Approximation</h3>
+        <p>
+          The sampler was tested on a simple one-dimensional Gaussian target.
+          It recovered the expected mean and variance, showing good convergence
+          and a stable acceptance rate.
+        </p>
+
+        <figure>
+          <img src="images/mh_performance.png"
+              alt="Metropolis–Hastings 1D Gaussian Performance"
+              width="600">
+          <figcaption>Figure – Trace and histogram for the 1D Gaussian test.</figcaption>
+        </figure>
+      </details>
+
+
+    </section>
+  </main>
+
+  <!-- TL;DR popup modal -->
+  <div id="tldrModal" class="modal">
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <p><strong>Pros:</strong> General-purpose, easy to implement, handles complex posteriors.</p>
+      <p><strong>Cons:</strong> Slow convergence, correlated samples, tuning-sensitive.</p>
+      <p><strong>Use cases:</strong> Bayesian inference, population genetics, MCMC sampling.</p>
+    </div>
+  </div>
+
+  <script>
+  const modal = document.getElementById('tldrModal');
+  const link  = document.getElementById('tldrLink');   // matches the link in your HTML
+  const close = document.getElementsByClassName('close-button')[0];
+
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    modal.classList.add('show');
+  });
+
+  close.addEventListener('click', () => {
+    modal.classList.remove('show');
+  });
+
+  window.addEventListener('click', (e) => {
+    if (e.target === modal) modal.classList.remove('show');
+  });
+</script>
+
+</body>
+</html>
