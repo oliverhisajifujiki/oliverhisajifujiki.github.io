@@ -15,9 +15,9 @@ body {
 
 header {
   background-image: url("sine_wave_paint_fill.gif");
-  background-repeat: repeat-x;
-  background-size: contain;
-  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
   color: #fddca9;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
   padding: 2rem 1rem;
@@ -25,6 +25,7 @@ header {
   border-bottom: 4px solid #562717;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 }
+
 
 
 
@@ -181,4 +182,12 @@ details.dropdown .tldr {
   cursor: pointer;
 }
 .close-button:hover { color: #562717; }
+
+img {
+  max-width: 100%;   /* never exceed the container width */
+  height: auto;      /* preserve aspect ratio */
+  display: block;    /* removes little whitespace under images */
+  margin: 0 auto;    /* centers the image inside its container */
+  border-radius: 6px; /* optional: soft rounded edges for polish */
+}
 
