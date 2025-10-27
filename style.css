@@ -194,4 +194,111 @@ img {
   text-shadow: none !important;
 }
 
+/* === BUTTON STYLING (for Test ML / Random Sample etc.) === */
+button {
+  background: #fff5e6;                /* warm cream base, same as open dropdowns */
+  color: #e76219;                     /* warm orange text */
+  font-family: "Trebuchet MS", Arial, sans-serif;
+  font-weight: bold;
+  border: 2px solid rgba(231, 98, 25, 0.5); /* dotted-orange feel, subtle */
+  border-radius: 6px;
+  padding: 0.45rem 1.1rem;
+  cursor: pointer;
+  font-size: 0.95rem;
+  letter-spacing: 0.4px;
+  transition: all 0.25s ease;
+  box-shadow: 0 3px 6px rgba(86, 39, 23, 0.1);
+}
+
+button:hover {
+  background: #fbe8ca;                /* faint orange tint, like hover dropdown */
+  border-color: #e76219;
+  color: #c21717;                     /* deeper orange-red on hover */
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(86, 39, 23, 0.15);
+}
+
+button:active {
+  background: #fff1d6;                /* pressed effect */
+  transform: translateY(1px);
+  box-shadow: 0 2px 4px rgba(86, 39, 23, 0.1);
+}
+
+/* Latest Project: left aligned horizontal */
+.latest-project {
+  text-align: left;
+  display: block;
+  margin-top:1.5rem;
+}
+
+
+.project-card.horizontal {
+  display: flex;
+  align-items: center;        /* was 'left' — invalid, should be 'center' */
+  gap: 12px;
+  border: 2px solid rgba(231, 98, 25, 0.4);
+  border-radius: 8px;
+  background: rgba(254, 167, 18, 0.08);
+  padding: 0.8rem 1rem;
+  max-width: 600px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  margin-left: 0;             /* anchor left edge */
+  margin-right: auto;         /* push away from center */
+  text-align: left;
+}
+
+
+.project-card.horizontal:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(86, 39, 23, 0.25);
+}
+
+/* tiny thumbnail beside latest project text */
+.project-card.horizontal img.project-thumb {
+  height: 1em;          /* roughly same height as text */
+  width: auto;          /* keep proportions */
+  vertical-align: left;
+  border: none;         /* remove thick border for clarity at small size */
+  flex-shrink: 0;
+}
+
+/* Link-like heading style (matches your TL;DR vibe) */
+.project-link .project-info h4 {
+  margin: 0 0 4px 0;
+  font-size: 1.05rem;
+  color: #e76219;
+  font-weight: bold;
+  display: inline-block;
+  border-bottom: 1px dotted rgba(231, 98, 25, 0.5);
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.project-link:hover .project-info h4 {
+  color: #c21717;
+  border-color: rgba(194, 23, 23, 0.6);
+}
+
+.project-info p {
+  margin: 0;
+  color: #2b1a12;
+  line-height: 1.4;
+}
+
+/* force left alignment for latest project text + elements */
+.latest-project,
+.latest-project * {
+  text-align: left !important;
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+}
+
+/* reset the inner <img> centering that was inherited from global styles */
+.latest-project img {
+  display: inline !important;
+  margin: 0 !important;
+}
+
+
+
+
 

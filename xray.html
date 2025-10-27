@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chest X-ray Classification – Olly Fujiki</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header>
+    <h1>Chest X-ray Classification</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="projects.html">Projects</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="project-section">
+
+      <h2>Chest X-ray Classification with ResNet</h2>
+
+      <!-- 1️⃣ Description -->
+      <details class="dropdown">
+        <summary>Description</summary>
+        <p>
+          This project uses a Convolutional Neural Network (CNN) built on top of a
+          pre-trained ResNet-18 architecture to classify chest X-rays as
+          <em>normal</em> or <em>abnormal</em>.
+        </p>
+        <p>
+          The model was trained on a subset of NIH’s Chest X-ray dataset and fine-tuned
+          for binary classification. Grad-CAM (Gradient-weighted Class Activation Mapping)
+          visualizations are used to highlight the lung regions most responsible for
+          the model’s predictions.
+        </p>
+        <p>
+          <a href="#" id="tldrLink" class="tldr-link">(TL;DR)</a>
+        </p>
+      </details>
+
+      <!-- 2️⃣ Visualization -->
+        <details class="dropdown" open>
+        <summary>Model Demo</summary>
+        <p>
+            Pick any X-ray (or click “Random”) to run it through the trained network and reveal where the model focuses its attention
+         </p>
+
+        <!-- Random + Gallery -->
+        <div id="gallery-section" style="text-align:center;">
+
+            <button id="random-btn" style="margin-bottom:10px;">Pick Random X-ray</button>
+
+            <div id="xray-gallery"
+                style="display:flex; overflow-x:auto; gap:10px; padding:10px;
+                        border:1px solid #ccc; border-radius:8px; max-width:800px; margin:auto;">
+            </div>
+
+            <!-- Display pair -->
+            <div id="display-pair" style="margin-top:20px;">
+            <img id="orig-img" src="" alt="Original X-ray"
+                width="300" style="display:none; border-radius:8px; margin:10px;">
+            <img id="gradcam-img" src="" alt="Grad-CAM result"
+                width="300" style="display:none; border-radius:8px; margin:10px;">
+            </div>
+
+        </div>
+        </details>
+
+
+      <!-- 3️⃣ Model Info -->
+      <details class="dropdown">
+        <summary>Model Info</summary>
+        <ul>
+          <li>Architecture: ResNet-18</li>
+          <li>Dataset: NIH Chest X-rays (subset)</li>
+          <li>Classes: Normal / Abnormal</li>
+          <li>Visualization: Grad-CAM overlays</li>
+          <li>Framework: PyTorch</li>
+        </ul>
+      </details>
+
+    </section>
+  </main>
+
+  <!-- TL;DR popup modal -->
+  <div id="tldrModal" class="modal">
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <p><strong>Goal:</strong> Train a convolutional neural network to detect abnormal lung X-rays.</p>
+<p><strong>Model:</strong> ResNet-18 architecture (a CNN with residual skip connections) fine-tuned on chest X-ray data and visualized with Grad-CAM.</p>
+    </div>
+  </div>
+
+  <!-- JS for image + modal -->
+  <script>
+
+    // --- TL;DR modal ---
+    const modal = document.getElementById('tldrModal');
+    const link  = document.getElementById('tldrLink');
+    const close = document.getElementsByClassName('close-button')[0];
+
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      modal.classList.add('show');
+    });
+
+    close.addEventListener('click', () => {
+      modal.classList.remove('show');
+    });
+
+    window.addEventListener('click', (e) => {
+      if (e.target === modal) modal.classList.remove('show');
+    });
+    //All the xrays either scrolled or random! 
+        const totalImages = 100;
+        const gallery = document.getElementById("xray-gallery");
+        const origImg = document.getElementById("orig-img");
+        const gradcamImg = document.getElementById("gradcam-img");
+        const randomBtn = document.getElementById("random-btn");
+
+        // build the scrollable gallery (thumbnails)
+        for (let i = 1; i <= totalImages; i++) {
+        const file = i.toString().padStart(3, "0");
+        const thumb = document.createElement("img");
+        thumb.src = `images/gradcamPairs/xray_${file}_orig.png`;
+        thumb.alt = `X-ray ${file}`;
+        thumb.width = 100;
+        thumb.style.cursor = "pointer";
+        thumb.addEventListener("click", () => showPair(file));
+        gallery.appendChild(thumb);
+        }
+
+        // show random pair
+        randomBtn.addEventListener("click", () => {
+        const n = Math.floor(Math.random() * totalImages) + 1;
+        const file = n.toString().padStart(3, "0");
+        showPair(file);
+        });
+
+        // display both images
+        function showPair(file) {
+        origImg.src = `images/gradcamPairs/xray_${file}_orig.png`;
+        gradcamImg.src = `images/gradcamPairs/xray_${file}_gradcam.png`;
+        origImg.style.display = "inline-block";
+        gradcamImg.style.display = "inline-block";
+        }
+</script>
+
+</body>
+</html>
