@@ -25,18 +25,7 @@
       <details class="dropdown">
         <summary>Description</summary>
         <p>
-          This project uses a Convolutional Neural Network (CNN) built on top of a
-          pre-trained ResNet-18 architecture to classify chest X-rays as
-          <em>normal</em> or <em>abnormal</em>.
-        </p>
-        <p>
-          The model was trained on a subset of NIH’s Chest X-ray dataset and fine-tuned
-          for binary classification. Grad-CAM (Gradient-weighted Class Activation Mapping)
-          visualizations are used to highlight the lung regions most responsible for
-          the model’s predictions.
-        </p>
-        <p>
-          <a href="#" id="tldrLink" class="tldr-link">(TL;DR)</a>
+         Over two days, I designed and trained a deep learning pipeline for medical image classification using PyTorch, comparing the performance of ResNet and DenseNet architectures. Starting with a subset of the NIH Chest X-ray dataset, I implemented custom preprocessing, balanced label generation, and GPU-accelerated training to achieve strong baseline accuracy. Along the way, I optimized training parameters, explored data scaling effects, and integrated model evaluation and visualization tools for interpretability. The result is a fully functional, extensible framework for rapid experimentation with large-scale medical imaging data.
         </p>
       </details>
 
@@ -71,48 +60,99 @@
 
       <!-- 3️⃣ Model Info -->
       <details class="dropdown">
-        <summary>Model Info</summary>
-        <ul>
-          <li>Architecture: ResNet-18</li>
-          <li>Dataset: NIH Chest X-rays (subset)</li>
-          <li>Classes: Normal / Abnormal</li>
-          <li>Visualization: Grad-CAM overlays</li>
-          <li>Framework: PyTorch</li>
-        </ul>
-      </details>
+  <summary>Model Parameters</summary>
+
+  <div class="model-info">
+
+    <p>
+      The project explores convolutional neural network (CNN) architectures for
+      binary medical image classification (<em>Normal vs. Abnormal</em>).
+      Models were implemented and fine-tuned using PyTorch, leveraging
+      transfer learning from pretrained ImageNet weights.
+    </p>
+
+    <p>
+      The baseline model, <strong>ResNet18</strong>, consists of 18 layers with
+      residual skip connections that preserve gradient flow in deep networks.
+      Input X-ray images were resized to 224×224, normalized to ImageNet means
+      and standard deviations, and trained using a batch size of 16. Optimization
+      was performed using the Adam optimizer (learning rate 1×10<sup>−4</sup>,
+      weight decay 1×10<sup>−4</sup>), on a CUDA-enabled GPU for 12–15 epochs,
+      employing mixed-precision training for improved efficiency.
+    </p>
+
+    <p>
+      Subsequent experiments scaled up both dataset size and network complexity:
+    </p>
+
+    <ul>
+      <li><strong>ResNet18:</strong> trained on 1,000, 2,500, and 25,000 labeled X-ray images.</li>
+      <li><strong>ResNet50:</strong> a deeper residual network with 50 layers.</li>
+      <li><strong>DenseNet121:</strong> a densely connected architecture where each layer receives input from all previous layers, promoting feature reuse and improved gradient flow.</li>
+    </ul>
+
+    <p>
+      All models were evaluated on separate validation sets using overall accuracy and
+      visual interpretability (<em>via Grad-CAM</em>) as primary benchmarks. The accuracy of all the models is displayed below.
+    </p>
+  </div>
+  <figure style="text-align:center; margin-top:1rem;">
+  <img src="images/NIHChestXRayAccuracyBarGraphToyExample.png"
+       alt="Accuracy comparison across CNN architectures"
+       width="500"
+       style="border-radius:8px; border:2px solid rgba(231,98,25,0.4);">
+  <figcaption style="margin-top:0.4rem; color:#562717; font-size:0.9rem;">
+    Figure — Accuracy comparison across dataset sizes and CNN architectures.
+  </figcaption>
+</figure>
+
+</details>
+
+<details class="dropdown">
+  <summary>Challenges and Future Work</summary>
+
+  <div class="model-info">
+
+    <p>
+      Several key challenges emerged during training and evaluation. Early models plateaued around
+      68–70% validation accuracy despite increasing dataset size, suggesting that architecture and
+      hyperparameters—not just data volume—were limiting performance. Experiments revealed that
+      overly high learning rates (e.g., 1×10<sup>−3</sup>) caused unstable training, while very low
+      rates slowed convergence.
+    </p>
+
+    <p>
+      Data quality and balance also presented issues. Many images were near-duplicates or had
+      inconsistent labeling (<em>“No Finding”</em> vs. multi-label pathologies), limiting model
+      generalization. Processing large tar archives was time-intensive, and GPU memory constrained
+      batch sizes and training throughput.
+    </p>
+
+    <h4>Future Goals</h4>
+    <ul>
+      <li>Incorporating <strong>multi-class classification</strong> (identifying specific pathologies).</li>
+      <li>Using <strong>semi-supervised or self-supervised pretraining</strong> to leverage unlabeled data.</li>
+      <li>Testing <strong>attention-based architectures</strong> (e.g., Vision Transformers).</li>
+      <li>Implementing <strong>domain adaptation</strong> to generalize across modalities (CT, MRI, Ultrasound).</li>
+      <li>Improving <strong>explainability</strong> via better visualization of activation maps and decision regions.</li>
+    </ul>
+
+    <p>
+      Overall, while the models achieved consistent moderate accuracy, they established a scalable,
+      interpretable baseline for further exploration.
+    </p>
+  </div>
+</details>
+
+
 
     </section>
   </main>
 
-  <!-- TL;DR popup modal -->
-  <div id="tldrModal" class="modal">
-    <div class="modal-content">
-      <span class="close-button">&times;</span>
-      <p><strong>Goal:</strong> Train a convolutional neural network to detect abnormal lung X-rays.</p>
-<p><strong>Model:</strong> ResNet-18 architecture (a CNN with residual skip connections) fine-tuned on chest X-ray data and visualized with Grad-CAM.</p>
-    </div>
-  </div>
 
   <!-- JS for image + modal -->
   <script>
 
-    // --- TL;DR modal ---
-    const modal = document.getElementById('tldrModal');
-    const link  = document.getElementById('tldrLink');
-    const close = document.getElementsByClassName('close-button')[0];
-
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      modal.classList.add('show');
-    });
-
-    close.addEventListener('click', () => {
-      modal.classList.remove('show');
-    });
-
-    window.addEventListener('click', (e) => {
-      if (e.target === modal) modal.classList.remove('show');
-    });
     //All the xrays either scrolled or random! 
         const totalImages = 100;
         const gallery = document.getElementById("xray-gallery");
